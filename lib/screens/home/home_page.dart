@@ -19,11 +19,13 @@ class _HomePageState extends State<HomePage> {
   DatabaseHelper _db;
   bool isLoading;
   List<NoteBook> noteList;
+  List<NoteBook> storeNoteList;
 
   @override
   void initState() {
     super.initState();
     noteList = [];
+    storeNoteList = [];
     isLoading = true;
     _db = DatabaseHelper();
     greetings();
@@ -33,13 +35,13 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchNoteList() async {
     try {
       var notes = await _db.fetchNoteList();
-      CustomToast.toast(notes.length.toString());
       if (notes.length > 0) {
         setState(() {
-          // noteList.addAll("notes");
+          noteList.addAll(notes);
+          storeNoteList.addAll(notes);
           isLoading = false;
         });
-      }else{
+      } else {
         setState(() {
           noteList = [];
           isLoading = false;
@@ -69,6 +71,58 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> showMenuSelection(String value, int id) {
+    switch (value) {
+      case 'Delete':
+        setState(() {
+          isLoading = true;
+        });
+        onDelete(id);
+        break;
+
+      case 'Edit':
+        CustomToast.toast('Edit clicked');
+        break;
+    }
+  }
+
+  void onDelete(int id) async {
+    int isDeleted = await _db.deleteNote(id);
+    if (isDeleted == 1) {
+      CustomToast.toast('Note deleted');
+      setState(() {
+        isLoading = false;
+      });
+      noteList = [];
+      fetchNoteList();
+    } else {
+      CustomToast.toast('Note not deleted');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void filterSearchResult(String query) {
+    noteList.clear();
+    if (query.isNotEmpty) {
+      List<NoteBook> newList = [];
+
+      for (NoteBook noteBook in storeNoteList) {
+        if (noteBook.title.toLowerCase().contains(query.toLowerCase())) {
+          newList.add(noteBook);
+        }
+      }
+      setState(() {
+        noteList.addAll(newList);
+      });
+    } else {
+      setState(() {
+        noteList.addAll(storeNoteList);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,15 +132,15 @@ class _HomePageState extends State<HomePage> {
             elevation: 0.0,
             child: Icon(Icons.add),
             backgroundColor: kColorPrimary,
-            onPressed: () async{
-              String isAdded = await Navigator.push(
+            onPressed: () async {
+              bool isAdded = await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return NoteAddPage();
                 }),
               );
 
-              if(isAdded=="noteAdded"){
+              if (isAdded == true) {
                 setState(() {
                   noteList = [];
                   isLoading = true;
@@ -163,7 +217,9 @@ class _HomePageState extends State<HomePage> {
                               top: 0, bottom: 0, left: 15, right: 15),
                           height: 55,
                           child: TextField(
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              filterSearchResult(value);
+                            },
                             // controller: _editingController,
                             decoration: InputDecoration(
                               labelText: 'search by title...',
@@ -205,92 +261,7 @@ class _HomePageState extends State<HomePage> {
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: noteList.length,
                                     itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 15,
-                                            right: 15,
-                                            top: 0,
-                                            bottom: 0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: kColorLight,
-                                            ),
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        noteList[index].title,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .subtitle1
-                                                            .copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
-                                                      ),
-                                                      Text(
-                                                        noteList[index].content,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .subtitle2,
-                                                      ),
-                                                      Text(
-                                                        noteList[index].date,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText2,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                PopupMenuButton<String>(
-                                                  padding: EdgeInsets.zero,
-                                                  icon: Icon(Icons.more_vert),
-                                                  onSelected: (value) {},
-                                                  itemBuilder: (BuildContext
-                                                          context) =>
-                                                      <PopupMenuEntry<String>>[
-                                                    const PopupMenuItem<String>(
-                                                        value: 'Edit',
-                                                        child: ListTile(
-                                                            leading: Icon(
-                                                                Icons.edit),
-                                                            title: Text(
-                                                                'Update'))),
-                                                    const PopupMenuItem<String>(
-                                                        value: 'Delete',
-                                                        child: ListTile(
-                                                            leading: Icon(
-                                                                Icons.delete),
-                                                            title: Text(
-                                                                'Delete'))),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
+                                      return noteListItem(noteList[index]);
                                     },
                                   )
                             : Center(
@@ -306,6 +277,72 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           )),
+    );
+  }
+
+  Padding noteListItem(NoteBook noteBook) {
+    return Padding(
+      padding: EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: kColorLight,
+          ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      noteBook.title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      noteBook.content,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                    Text(
+                      noteBook.date,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuButton<String>(
+                padding: EdgeInsets.zero,
+                icon: Icon(Icons.more_vert),
+                onSelected: (value) {
+                  showMenuSelection(value, noteBook.id);
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  const PopupMenuItem<String>(
+                      value: 'Edit',
+                      child: ListTile(
+                          leading: Icon(Icons.edit), title: Text('Update'))),
+                  const PopupMenuItem<String>(
+                      value: 'Delete',
+                      child: ListTile(
+                          leading: Icon(Icons.delete), title: Text('Delete'))),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

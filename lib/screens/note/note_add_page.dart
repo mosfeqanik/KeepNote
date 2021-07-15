@@ -213,13 +213,13 @@ class _NoteAddPageState extends State<NoteAddPage> {
                             );
                             var isAdded = await _db.addNote(note);
 
-                            if (isAdded == 1) {
+                            if (isAdded != null) {
                               setState(() {
                                 isLoading = false;
                               });
                               CustomToast.toast(
                                   'Note has been successfully added');
-                              Navigator.pop(context,"noteAdded");
+                              Navigator.pop(context, true);
                             } else {
                               setState(() {
                                 isLoading = false;

@@ -37,4 +37,9 @@ class DatabaseHelper {
       );
     });
   }
+
+  Future<int> deleteNote(int id) async {
+    final db = await initDatabase();
+    return await db.delete('note', where: "id = ?", whereArgs: [id]);
+  }
 }

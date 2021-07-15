@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> showMenuSelection(String value, int id) {
+  Future<void> showMenuSelection(String value, int id) async {
     switch (value) {
       case 'Delete':
         setState(() {
@@ -131,12 +131,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void showlist(){
+  void showList() {
     noteList = [];
     fetchNoteList();
     Navigator.pop(context);
   }
-  void deleteConfirmation(int id){
+
+  void deleteConfirmation(int id) {
     Alert(
       context: context,
       type: AlertType.warning,
@@ -160,7 +161,7 @@ class _HomePageState extends State<HomePage> {
             "No",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () => showlist(),
+          onPressed: () => showList(),
           gradient: LinearGradient(colors: [
             Color.fromRGBO(252, 0, 0, 1.0),
             Color.fromRGBO(227, 224, 224, 1.0)

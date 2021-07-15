@@ -109,7 +109,10 @@ class _HomePageState extends State<HomePage> {
       List<NoteBook> newList = [];
 
       for (NoteBook noteBook in storeNoteList) {
-        if (noteBook.title.toLowerCase().contains(query.toLowerCase())) {
+        if (noteBook.title.toLowerCase().contains(query.toLowerCase())
+        ||noteBook.content.toLowerCase().contains(query.toLowerCase())
+        ||noteBook.date.toLowerCase().contains(query.toLowerCase())
+        ) {
           newList.add(noteBook);
         }
       }

@@ -6,6 +6,7 @@ import 'package:keepnote/screens/drawer/drawer_page.dart';
 import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
 import 'package:keepnote/screens/note/note_add_page.dart';
 import 'package:keepnote/utils/custom_toast.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -77,13 +78,18 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           isLoading = true;
         });
-        onDelete(id);
+        deleteConfirmation(id);
         break;
 
       case 'Edit':
         CustomToast.toast('Edit clicked');
         break;
     }
+  }
+
+  void showListData(){
+    noteList = [];
+    fetchNoteList();
   }
 
   void onDelete(int id) async {
@@ -93,21 +99,20 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         isLoading = false;
       });
-      noteList = [];
-      fetchNoteList();
+      Navigator.pop(context);
     } else {
       CustomToast.toast('Note not deleted');
       setState(() {
         isLoading = false;
       });
     }
+    showListData();
   }
 
   void filterSearchResult(String query) {
     noteList.clear();
     if (query.isNotEmpty) {
       List<NoteBook> newList = [];
-
       for (NoteBook noteBook in storeNoteList) {
         if (noteBook.title.toLowerCase().contains(query.toLowerCase())
         ||noteBook.content.toLowerCase().contains(query.toLowerCase())
@@ -124,6 +129,45 @@ class _HomePageState extends State<HomePage> {
         noteList.addAll(storeNoteList);
       });
     }
+  }
+
+  void showlist(){
+    noteList = [];
+    fetchNoteList();
+    Navigator.pop(context);
+  }
+  void deleteConfirmation(int id){
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "Delete ALERT",
+      desc: "Do You want to delete this Note?",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Yes",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => onDelete(id),
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(0, 179, 134, 1.0),
+            Color.fromRGBO(227, 224, 224, 1.0)
+          ]),
+
+        ),
+        DialogButton(
+          child: Text(
+            "No",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => showlist(),
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(252, 0, 0, 1.0),
+            Color.fromRGBO(227, 224, 224, 1.0)
+          ]),
+        )
+      ],
+    ).show();
   }
 
   @override

@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
       body: Scaffold(
           appBar: AppBar(
             title: AppBarTitleWidget(
-              title: 'Notebook',
+              title: 'NotebookPRO',
               subTitle: '-365',
             ),
           ),

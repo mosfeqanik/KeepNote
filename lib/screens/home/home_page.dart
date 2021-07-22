@@ -75,7 +75,6 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           isLoading = true;
         });
-        deleteConfirmation(id);
         break;
 
       case 'Edit':

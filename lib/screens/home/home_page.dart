@@ -204,9 +204,9 @@ class _HomePageState extends State<HomePage> {
               subTitle: '-365',
             ),
           ),
-          // drawer: Drawer(
-          //   child: DrawerPage(),
-          // ),
+          drawer: Drawer(
+            child: DrawerPage(),
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 20),

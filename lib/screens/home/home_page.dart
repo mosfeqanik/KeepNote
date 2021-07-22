@@ -5,8 +5,7 @@ import 'package:keepnote/models/note.dart';
 import 'package:keepnote/screens/drawer/drawer_page.dart';
 import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
 import 'package:keepnote/screens/note/note_add_page.dart';
-import 'package:keepnote/utils/custom_toast.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -15,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = 'Ebrahim Joy';
+  String name = ' Md Mosfeq Anik';
   String _greeting;
   DatabaseHelper _db;
   bool isLoading;
@@ -30,7 +29,21 @@ class _HomePageState extends State<HomePage> {
     isLoading = true;
     _db = DatabaseHelper();
     greetings();
-    fetchNoteList();
+  }
+  void greetings() {
+    var timeOfDay = DateTime.now().hour;
+
+    if (timeOfDay >= 0 && timeOfDay < 6) {
+      _greeting = 'Good Night';
+    } else if (timeOfDay >= 0 && timeOfDay < 12) {
+      _greeting = 'Good Morning';
+    } else if (timeOfDay >= 12 && timeOfDay < 16) {
+      _greeting = 'Good Afternoon';
+    } else if (timeOfDay >= 16 && timeOfDay < 21) {
+      _greeting = 'Good Evening';
+    } else if (timeOfDay >= 21 && timeOfDay < 24) {
+      _greeting = 'Good Night';
+    }
   }
 
   Future<void> fetchNoteList() async {
@@ -56,121 +69,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void greetings() {
-    var timeOfDay = DateTime.now().hour;
-
-    if (timeOfDay >= 0 && timeOfDay < 6) {
-      _greeting = 'Good Night';
-    } else if (timeOfDay >= 0 && timeOfDay < 12) {
-      _greeting = 'Good Morning';
-    } else if (timeOfDay >= 12 && timeOfDay < 16) {
-      _greeting = 'Good Afternoon';
-    } else if (timeOfDay >= 16 && timeOfDay < 21) {
-      _greeting = 'Good Evening';
-    } else if (timeOfDay >= 21 && timeOfDay < 24) {
-      _greeting = 'Good Night';
-    }
-  }
-
-  Future<void> showMenuSelection(String value, int id) async {
-    switch (value) {
-      case 'Delete':
-        setState(() {
-          isLoading = true;
-        });
-        deleteConfirmation(id);
-        break;
-
-      case 'Edit':
-        CustomToast.toast('Edit clicked');
-        break;
-    }
-  }
-
-  void showListData(){
-    noteList = [];
-    fetchNoteList();
-  }
-
-  void onDelete(int id) async {
-    int isDeleted = await _db.deleteNote(id);
-    if (isDeleted == 1) {
-      CustomToast.toast('Note deleted');
-      setState(() {
-        isLoading = false;
-      });
-      Navigator.pop(context);
-    } else {
-      CustomToast.toast('Note not deleted');
-      setState(() {
-        isLoading = false;
-      });
-    }
-    showListData();
-  }
-
-  void filterSearchResult(String query) {
-    noteList.clear();
-    if (query.isNotEmpty) {
-      List<NoteBook> newList = [];
-      for (NoteBook noteBook in storeNoteList) {
-        if (noteBook.title.toLowerCase().contains(query.toLowerCase())
-        ||noteBook.content.toLowerCase().contains(query.toLowerCase())
-        ||noteBook.date.toLowerCase().contains(query.toLowerCase())
-        ) {
-          newList.add(noteBook);
-        }
-      }
-      setState(() {
-        noteList.addAll(newList);
-      });
-    } else {
-      setState(() {
-        noteList.addAll(storeNoteList);
-      });
-    }
-  }
-
-  void showList() {
-    noteList = [];
-    fetchNoteList();
-    Navigator.pop(context);
-  }
-
-  void deleteConfirmation(int id) {
-    Alert(
-      context: context,
-      type: AlertType.warning,
-      title: "Delete ALERT",
-      desc: "Do You want to delete this Note?",
-      buttons: [
-        DialogButton(
-          child: Text(
-            "Yes",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => onDelete(id),
-          gradient: LinearGradient(colors: [
-            Color.fromRGBO(0, 179, 134, 1.0),
-            Color.fromRGBO(227, 224, 224, 1.0)
-          ]),
-
-        ),
-        DialogButton(
-          child: Text(
-            "No",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => showList(),
-          gradient: LinearGradient(colors: [
-            Color.fromRGBO(252, 0, 0, 1.0),
-            Color.fromRGBO(227, 224, 224, 1.0)
-          ]),
-        )
-      ],
-    ).show();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -193,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                   noteList = [];
                   isLoading = true;
                 });
-                fetchNoteList();
+                // fetchNoteList();
               }
             }),
       ),
@@ -228,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Hello' + ' Ebrahim Joy,',
+                              'Hello ' + name,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6
@@ -266,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                           height: 55,
                           child: TextField(
                             onChanged: (value) {
-                              filterSearchResult(value);
+                              // filterSearchResult(value);
                             },
                             // controller: _editingController,
                             decoration: InputDecoration(
@@ -374,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.more_vert),
                 onSelected: (value) {
-                  showMenuSelection(value, noteBook.id);
+                  // showMenuSelection(value, noteBook.id);
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                   const PopupMenuItem<String>(

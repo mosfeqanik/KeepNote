@@ -1,43 +1,43 @@
 
 import 'package:flutter/material.dart';
-const kColorBlue = Color(0xff2e83f8);
-const kColorDarkBlue = Color(0xff1b3a5e);
-const kColorPink = Color(0xffff748d);
+const qColorBlue = Color(0xff2e83f8);
+const qColorDarkBlue = Color(0xff1b3a5e);
+const qColorPink = Color(0xffff748d);
 
-const kInputTextStyle = TextStyle(
+const qInputTextStyle = TextStyle(
     fontSize: 14,
     color: Color(0xffbcbcbc),
     fontWeight: FontWeight.w300,
     fontFamily: 'NunitoSans');
 
-const kColorPrimary = Color(0xff2e83f8);
-const kColorPrimaryDark = Color(0xff1b3a5e);
-const kColorSecondary = Color(0xffff748d);
-const kColorDark = Color(0xff121212);
-const kColorLight = Color(0xffEBF2F5);
+const qColorPrimary = Color(0xff2e83f8);
+const qColorPrimaryDark = Color(0xff1b3a5e);
+const qColorSecondary = Color(0xffff748d);
+const qColorDark = Color(0xff121212);
+const qColorLight = Color(0xffEBF2F5);
 
-const kBottomPadding = 48.0;
+const qkBottomPadding = 48.0;
 
-const kTextStyleButton = TextStyle(
-  color: kColorPrimary,
+const qTextStyleButton = TextStyle(
+  color: qColorPrimary,
   fontSize: 18,
   fontWeight: FontWeight.w500,
   fontFamily: 'NunitoSans',
 );
 
-const kTextStyleSubtitle1 = TextStyle(
+const qTextStyleSubtitle1 = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w400,
   fontFamily: 'NunitoSans',
 );
 
-const kTextStyleSubtitle2 = TextStyle(
+const qTextStyleSubtitle2 = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w500,
   fontFamily: 'NunitoSans',
 );
 
-const kTextStyleBody2 = TextStyle(
+const qTextStyleBody2 = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w400,
   fontFamily: 'NunitoSans',

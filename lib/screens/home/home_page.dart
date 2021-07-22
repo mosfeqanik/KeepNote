@@ -6,6 +6,7 @@ import 'package:keepnote/screens/drawer/drawer_page.dart';
 import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
 import 'package:keepnote/screens/note/note_add_page.dart';
 import 'package:keepnote/utils/custom_toast.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 
@@ -30,10 +31,11 @@ class _HomePageState extends State<HomePage> {
     isLoading = true;
     _db = DatabaseHelper();
     greetings();
+    fetchNoteList();
   }
+
   void greetings() {
     var timeOfDay = DateTime.now().hour;
-
     if (timeOfDay >= 0 && timeOfDay < 6) {
       _greeting = 'Good Night';
     } else if (timeOfDay >= 0 && timeOfDay < 12) {
@@ -69,6 +71,7 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+
   Future<void> showMenuSelection(String value, int id) async {
     switch (value) {
       case 'Delete':
@@ -105,6 +108,62 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void onDelete(int id) async {
+    int isDeleted = await _db.deleteNote(id);
+    if (isDeleted == 1) {
+      CustomToast.toast('Note deleted');
+      setState(() {
+        isLoading = true;
+      });
+      noteList = [];
+      fetchNoteList();
+    } else {
+      CustomToast.toast('Note not deleted');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void showlist(){
+    noteList = [];
+    fetchNoteList();
+    Navigator.pop(context);
+  }
+
+  void deleteConfirmation(int id){
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "Delete ALERT",
+      desc: "Do You want to delete this Note?",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Yes",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => onDelete(id),
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(0, 179, 134, 1.0),
+            Color.fromRGBO(227, 224, 224, 1.0)
+          ]),
+
+        ),
+        DialogButton(
+          child: Text(
+            "No",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => showlist(),
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(252, 0, 0, 1.0),
+            Color.fromRGBO(227, 224, 224, 1.0)
+          ]),
+        )
+      ],
+    ).show();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,9 +206,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(
                           Icons.menu_book,
@@ -158,31 +217,26 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           width: 10,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Hello ' + name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                            ),
-                            _greeting != null
-                                ? Text(
-                                    _greeting,
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                      fontFamily: 'NunitoSans',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  )
-                                : Container(),
-                          ],
+                        Text(
+                          'Hello, ' + name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              .copyWith(
+                                fontWeight: FontWeight.w400,
+                              ),
                         ),
+                        _greeting != null
+                            ? Text(
+                                _greeting,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                  fontFamily: 'NunitoSans',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                   ),

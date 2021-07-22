@@ -34,7 +34,7 @@ class _NoteAddPageState extends State<NoteAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kColorBlue,
+        backgroundColor: qColorBlue,
         title: AppBarTitleWidget(
           title: 'Note Add',
           subTitle: '',
@@ -93,7 +93,7 @@ class _NoteAddPageState extends State<NoteAddPage> {
                                         fontFamily: 'NunitoSans',
                                       ),
                                       showCursor: true,
-                                      cursorColor: kColorBlue,
+                                      cursorColor: qColorBlue,
                                       cursorWidth: 1,
                                     ),
                                   ),
@@ -135,7 +135,7 @@ class _NoteAddPageState extends State<NoteAddPage> {
                                         fontFamily: 'NunitoSans',
                                       ),
                                       showCursor: true,
-                                      cursorColor: kColorBlue,
+                                      cursorColor: qColorBlue,
                                       cursorWidth: 1,
                                     ),
                                   ),
@@ -234,7 +234,7 @@ class _NoteAddPageState extends State<NoteAddPage> {
                               border: Border.all(
                                 color: Colors.white,
                               ),
-                              color: kColorPrimary,
+                              color: qColorPrimary,
                               borderRadius: BorderRadius.circular(8)),
                           width: MediaQuery.of(context).size.width * 0.8,
                           padding: EdgeInsets.all(15),
@@ -252,7 +252,7 @@ class _NoteAddPageState extends State<NoteAddPage> {
                 )
               : Center(
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(kColorPrimary),
+                    valueColor: AlwaysStoppedAnimation<Color>(qColorPrimary),
                   ),
                 )),
     );

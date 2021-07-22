@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
         child: FloatingActionButton(
             elevation: 0.0,
             child: Icon(Icons.add),
-            backgroundColor: kColorPrimary,
+            backgroundColor: qColorPrimary,
             onPressed: () async {
               bool isAdded = await Navigator.push(
                 context,
@@ -204,9 +204,9 @@ class _HomePageState extends State<HomePage> {
               subTitle: '-365',
             ),
           ),
-          drawer: Drawer(
-            child: DrawerPage(),
-          ),
+          // drawer: Drawer(
+          //   child: DrawerPage(),
+          // ),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                             decoration: InputDecoration(
                               labelText: 'search by title...',
                               prefixIcon: Icon(Icons.search),
-                              fillColor: kColorLight,
+                              fillColor: qColorLight,
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
@@ -284,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                               focusedBorder: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(8.0)),
-                                  borderSide: BorderSide(color: kColorPrimary)),
+                                  borderSide: BorderSide(color: qColorPrimary)),
                               filled: true,
                               contentPadding: EdgeInsets.only(
                                   bottom: 10.0, left: 10.0, right: 10.0),
@@ -315,7 +315,7 @@ class _HomePageState extends State<HomePage> {
                             : Center(
                                 child: CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      kColorPrimary),
+                                      qColorPrimary),
                                 ),
                               )
                       ],
@@ -334,7 +334,7 @@ class _HomePageState extends State<HomePage> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: kColorLight,
+            color: qColorLight,
           ),
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),

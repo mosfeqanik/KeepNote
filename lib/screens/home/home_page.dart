@@ -5,6 +5,7 @@ import 'package:keepnote/models/note.dart';
 import 'package:keepnote/screens/drawer/drawer_page.dart';
 import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
 import 'package:keepnote/screens/note/note_add_page.dart';
+import 'package:keepnote/utils/custom_toast.dart';
 
 
 
@@ -14,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = ' Md Mosfeq Anik';
+  String name = 'Md Mosfeq Anik';
   String _greeting;
   DatabaseHelper _db;
   bool isLoading;
@@ -66,6 +67,20 @@ class _HomePageState extends State<HomePage> {
         noteList = [];
         isLoading = false;
       });
+    }
+  }
+  Future<void> showMenuSelection(String value, int id) async {
+    switch (value) {
+      case 'Delete':
+        setState(() {
+          isLoading = true;
+        });
+        deleteConfirmation(id);
+        break;
+
+      case 'Edit':
+        CustomToast.toast('Edit clicked');
+        break;
     }
   }
 

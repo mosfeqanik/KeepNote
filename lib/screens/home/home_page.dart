@@ -83,6 +83,28 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void filterSearchResult(String query) {
+    noteList.clear();
+    if (query.isNotEmpty) {
+      List<NoteBook> newList = [];
+      for (NoteBook noteBook in storeNoteList) {
+        if (noteBook.title.toLowerCase().contains(query.toLowerCase())
+            ||noteBook.content.toLowerCase().contains(query.toLowerCase())
+            ||noteBook.date.toLowerCase().contains(query.toLowerCase())
+        ) {
+          newList.add(noteBook);
+        }
+      }
+      setState(() {
+        noteList.addAll(newList);
+      });
+    } else {
+      setState(() {
+        noteList.addAll(storeNoteList);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                   noteList = [];
                   isLoading = true;
                 });
-                // fetchNoteList();
+                fetchNoteList();
               }
             }),
       ),
@@ -286,7 +308,7 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.more_vert),
                 onSelected: (value) {
-                  // showMenuSelection(value, noteBook.id);
+                  showMenuSelection(value, noteBook.id);
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                   const PopupMenuItem<String>(

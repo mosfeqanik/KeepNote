@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = 'Md Mosfeq Anik';
+  String name = 'Mosfeq Anik';
   String _greeting;
   DatabaseHelper _db;
   bool isLoading;

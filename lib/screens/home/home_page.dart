@@ -115,8 +115,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         isLoading = true;
       });
-      noteList = [];
-      fetchNoteList();
+      showList();
     } else {
       CustomToast.toast('Note not deleted');
       setState(() {

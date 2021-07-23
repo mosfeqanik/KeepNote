@@ -78,8 +78,8 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           isLoading = true;
         });
+        deleteConfirmation(id);
         break;
-
       case 'Edit':
         CustomToast.toast('Edit clicked');
         break;
@@ -144,11 +144,7 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () => onDelete(id),
-          gradient: LinearGradient(colors: [
-            Color.fromRGBO(0, 179, 134, 1.0),
-            Color.fromRGBO(227, 224, 224, 1.0)
-          ]),
-
+          color: Colors.teal,
         ),
         DialogButton(
           child: Text(
@@ -156,10 +152,8 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () => showlist(),
-          gradient: LinearGradient(colors: [
-            Color.fromRGBO(252, 0, 0, 1.0),
-            Color.fromRGBO(227, 224, 224, 1.0)
-          ]),
+          color: Colors.red,
+
         )
       ],
     ).show();

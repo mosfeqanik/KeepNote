@@ -22,10 +22,12 @@ class _HomePageState extends State<HomePage> {
   bool isLoading;
   List<NoteBook> noteList;
   List<NoteBook> storeNoteList;
+  String noData;
 
   @override
   void initState() {
     super.initState();
+    noData = "No note available, add new";
     noteList = [];
     storeNoteList = [];
     isLoading = true;
@@ -78,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           isLoading = true;
         });
-        deleteConfirmation(id);
+        deleteConfirmationAlertBox(id);
         break;
       case 'Edit':
         CustomToast.toast('Edit clicked');
@@ -91,16 +93,21 @@ class _HomePageState extends State<HomePage> {
     if (query.isNotEmpty) {
       List<NoteBook> newList = [];
       for (NoteBook noteBook in storeNoteList) {
-        if (noteBook.title.toLowerCase().contains(query.toLowerCase())
-            ||noteBook.content.toLowerCase().contains(query.toLowerCase())
-            ||noteBook.date.toLowerCase().contains(query.toLowerCase())
-        ) {
+        if (noteBook.title.toLowerCase().contains(query.toLowerCase()) ||
+            noteBook.content.toLowerCase().contains(query.toLowerCase()) ||
+            noteBook.date.toLowerCase().contains(query.toLowerCase())) {
           newList.add(noteBook);
         }
       }
-      setState(() {
-        noteList.addAll(newList);
-      });
+      if (newList.length <= 0) {
+        setState(() {
+          noData = "No data found";
+        });
+      } else {
+        setState(() {
+          noteList.addAll(newList);
+        });
+      }
     } else {
       setState(() {
         noteList.addAll(storeNoteList);
@@ -130,7 +137,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context);
   }
 
-  void deleteConfirmation(int id){
+  void deleteConfirmationAlertBox(int id){
     Alert(
       context: context,
       type: AlertType.warning,
@@ -247,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                           height: 55,
                           child: TextField(
                             onChanged: (value) {
-                              // filterSearchResult(value);
+                              filterSearchResult(value);
                             },
                             // controller: _editingController,
                             decoration: InputDecoration(

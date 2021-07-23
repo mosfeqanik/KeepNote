@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void showlist(){
+  void showList(){
     noteList = [];
     fetchNoteList();
     Navigator.pop(context);
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
             "No",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () => showlist(),
+          onPressed: () => showList(),
           color: Colors.red,
 
         )

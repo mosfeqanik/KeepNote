@@ -48,7 +48,8 @@ class DatabaseHelper {
     return await db.update('note', noteBook.toMap(),
         where: "id = ?", whereArgs: [noteBook.id]);
   }
-
-
-
+  Future<int> deleteTable() async {
+    final db = await initDatabase();
+    return await db.delete('note');
+  }
 }

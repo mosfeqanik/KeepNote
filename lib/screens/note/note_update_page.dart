@@ -12,7 +12,6 @@ class NoteUpdatePage extends StatefulWidget {
 
   NoteUpdatePage({this.notebook});
 
-
   @override
   _NoteUpdatePageState createState() => _NoteUpdatePageState();
 }
@@ -55,7 +54,7 @@ class _NoteUpdatePageState extends State<NoteUpdatePage> {
       appBar: AppBar(
         backgroundColor: qColorBlue,
         title: AppBarTitleWidget(
-          title: 'Note Add',
+          title: 'Update Your Note',
           subTitle: '',
         ),
         iconTheme: IconThemeData(
@@ -223,30 +222,31 @@ class _NoteUpdatePageState extends State<NoteUpdatePage> {
                       CustomToast.toast('Please select note date');
                     } else {
                       setState(() {
-                        isLoading = true;
-                      });
-                      NoteBook note = NoteBook(
-                        title: _titleController.text,
-                        content: _contentController.text,
-                        date: _date,
-                      );
-                      var isAdded = await _db.addNote(note);
+                              isLoading = true;
+                            });
+                            NoteBook note = NoteBook(
+                              id: widget.notebook.id,
+                              title: _titleController.text,
+                              content: _contentController.text,
+                              date: _date,
+                            );
+                            var isAdded = await _db.updateNote(note);
 
-                      if (isAdded != null) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                        CustomToast.toast(
-                            'Note has been successfully added');
-                        Navigator.pop(context, true);
-                      } else {
-                        setState(() {
-                          isLoading = false;
-                        });
-                        CustomToast.toast(
-                            'Note can not be added right now');
-                      }
-                    }
+                            if (isAdded != null) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              CustomToast.toast(
+                                  'Note has been successfully Updated');
+                              Navigator.pop(context, true);
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              CustomToast.toast(
+                                  'Note can not be Updated right now');
+                            }
+                          }
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -259,11 +259,11 @@ class _NoteUpdatePageState extends State<NoteUpdatePage> {
                     padding: EdgeInsets.all(15),
                     child: Center(
                       child: Text(
-                        'Add Note'.toUpperCase(),
-                        style: TextStyle(
-                            fontFamily: 'Poppins', color: Colors.white),
-                      ),
-                    ),
+                              'Update '.toUpperCase(),
+                              style: TextStyle(
+                                  fontFamily: 'Poppins', color: Colors.white),
+                            ),
+                          ),
                   ),
                 ),
               ),

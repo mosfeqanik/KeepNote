@@ -5,6 +5,7 @@ import 'package:keepnote/models/note.dart';
 import 'package:keepnote/screens/drawer/drawer_page.dart';
 import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
 import 'package:keepnote/screens/note/note_add_page.dart';
+import 'package:keepnote/screens/note/note_update_page.dart';
 import 'package:keepnote/utils/custom_toast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> showMenuSelection(String value, int id) async {
+  Future<void> showMenuSelection(String value, int id,NoteBook mbook) async {
     switch (value) {
       case 'Delete':
         setState(() {
@@ -83,7 +84,21 @@ class _HomePageState extends State<HomePage> {
         deleteConfirmationAlertBox(id);
         break;
       case 'Edit':
-        CustomToast.toast('Edit clicked');
+        bool isUpdated = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return NoteUpdatePage(
+              notebook: mbook,
+            );
+          }),
+        );
+        if (isUpdated) {
+          setState(() {
+            isLoading = true;
+          });
+          noteList = [];
+          fetchNoteList();
+        }
         break;
     }
   }
@@ -164,6 +179,7 @@ class _HomePageState extends State<HomePage> {
       ],
     ).show();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -362,7 +378,7 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.more_vert),
                 onSelected: (value) {
-                  showMenuSelection(value, noteBook.id);
+                  showMenuSelection(value, noteBook.id,noteBook);
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                   const PopupMenuItem<String>(

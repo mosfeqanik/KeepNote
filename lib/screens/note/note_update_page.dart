@@ -88,6 +88,7 @@ class _NoteUpdatePageState extends State<NoteUpdatePage> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                   ),
+
                                 ),
                               ),
                             ),

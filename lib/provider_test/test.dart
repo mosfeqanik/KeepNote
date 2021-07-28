@@ -3,7 +3,7 @@ import 'package:keepnote/provider_test/MyData.dart';
 import 'package:provider/provider.dart';
 
 
-void main()=> runApp(MyApp2());
+// void main()=> runApp(MyApp2());
 
 class MyApp2 extends StatelessWidget {
 

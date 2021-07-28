@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:keepnote/NoteBook_Provider/Home_Page_Provider.dart';
 import 'package:keepnote/screens/home/home_page.dart';
+import 'package:provider/provider.dart';
 
 
 void main() {
@@ -9,13 +11,18 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'note',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider<HomePageProvider>(
+      create: (context){
+        return HomePageProvider();
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'note',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: HomePage()
       ),
-      home: HomePage()
     );
   }
 }

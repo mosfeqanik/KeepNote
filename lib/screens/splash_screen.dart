@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:keepnote/utils/share_pref.dart';
 
 import 'home/home_page.dart';
 import 'login/login_screen.dart';
@@ -17,10 +18,18 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 3), () => {_loadScreen()});
+    Timer(Duration(seconds: 3), () => {setPref()});
   }
 
-  _loadScreen() async {
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+  void setPref() async {
+    await Prefs.loadPref();
+    bool isLoggedIn;
+    isLoggedIn = Prefs.getBool(Prefs.IS_LOGGED_IN,def:false);
     if(isLoggedIn){
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => HomePage()),

@@ -18,6 +18,7 @@ dependencies:
   path_provider: ^2.0.2
   rflutter_alert: ^2.0.2
   provider: ^5.0.0
+  shared_preferences: ^2.0.6
 
 dev_dependencies:
   flutter_test:

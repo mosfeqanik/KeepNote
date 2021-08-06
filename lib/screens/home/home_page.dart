@@ -5,12 +5,13 @@ import 'package:keepnote/database/database_helper.dart';
 import 'package:keepnote/models/note.dart';
 import 'package:keepnote/screens/drawer/drawer_page.dart';
 import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
+import 'package:keepnote/screens/login/login_screen.dart';
 import 'package:keepnote/screens/note/note_add_page.dart';
 import 'package:keepnote/screens/note/note_update_page.dart';
 import 'package:keepnote/utils/custom_toast.dart';
+import 'package:keepnote/utils/share_pref.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
 
 
 class HomePage extends StatefulWidget {
@@ -37,10 +38,17 @@ class _HomePageState extends State<HomePage> {
     _db = DatabaseHelper();
     greetings();
     fetchNoteList();
+    setPref();
+  }
+
+  void setPref() async {
+    await Prefs.loadPref();
   }
 
   void greetings() {
-    var timeOfDay = DateTime.now().hour;
+    var timeOfDay = DateTime
+        .now()
+        .hour;
     if (timeOfDay >= 0 && timeOfDay < 6) {
       _greeting = 'Good Night';
     } else if (timeOfDay >= 0 && timeOfDay < 12) {
@@ -55,11 +63,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchNoteList() async {
-    var providerHomePage = Provider.of<HomePageProvider>(context, listen: false);
+    var providerHomePage = Provider.of<HomePageProvider>(
+        context, listen: false);
     try {
       var notes = await _db.fetchNoteList();
       if (notes.length > 0) {
-        Provider.of<HomePageProvider>(context, listen: false).notebooks = notes;
+        Provider
+            .of<HomePageProvider>(context, listen: false)
+            .notebooks = notes;
         // setState(() {
         //   noteList.addAll(notes);
         //   storeNoteList.addAll(notes);
@@ -76,7 +87,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> showMenuSelection(String value, int id,NoteBook mbook) async {
+  Future<void> showMenuSelection(String value, int id, NoteBook mbook) async {
     switch (value) {
       case 'Delete':
         setState(() {
@@ -147,13 +158,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void showList(){
+  void showList() {
     noteList = [];
     fetchNoteList();
     Navigator.pop(context);
   }
 
-  void deleteConfirmationAlertBox(int id){
+  void deleteConfirmationAlertBox(int id) {
     Alert(
       context: context,
       type: AlertType.warning,
@@ -217,7 +228,7 @@ class _HomePageState extends State<HomePage> {
             child: DrawerPage(),
           ),
           body: Consumer<HomePageProvider>(
-            builder: (_,provider,___){
+            builder: (_, provider, ___) {
               return SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
@@ -228,16 +239,26 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(
-                              Icons.menu_book,
-                              size: 40,
+                            InkWell(
+                              onTap: () {
+                                Prefs.clearPref();
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                        (route) => false);
+                              },
+                              child:Icon(
+                                Icons.menu_book,
+                                size: 40,
+                              )
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             Text(
                               'Hello, ' + name,
-                              style: Theme.of(context)
+                              style: Theme
+                                  .of(context)
                                   .textTheme
                                   .headline6
                                   .copyWith(
@@ -290,7 +311,8 @@ class _HomePageState extends State<HomePage> {
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(8.0)),
-                                      borderSide: BorderSide(color: qColorPrimary)),
+                                      borderSide: BorderSide(
+                                          color: qColorPrimary)),
                                   filled: true,
                                   contentPadding: EdgeInsets.only(
                                       bottom: 10.0, left: 10.0, right: 10.0),
@@ -301,7 +323,8 @@ class _HomePageState extends State<HomePage> {
                               height: 10,
                             ),
                             !provider.isLoading
-                                ?provider.notebooks.contains(null) || provider.notebooks.length <= 0
+                                ? provider.notebooks.contains(null) ||
+                                provider.notebooks.length <= 0
                                 ? Container(
                                 child: Center(
                                     child:
@@ -359,7 +382,8 @@ class _HomePageState extends State<HomePage> {
                   children: <Widget>[
                     Text(
                       noteBook.title,
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .textTheme
                           .subtitle1
                           .copyWith(fontWeight: FontWeight.w700),
@@ -368,13 +392,19 @@ class _HomePageState extends State<HomePage> {
                       noteBook.content,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
                     ),
                     Text(
                       noteBook.date,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText2,
                     ),
                   ],
                 ),
@@ -383,9 +413,10 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.more_vert),
                 onSelected: (value) {
-                  showMenuSelection(value, noteBook.id,noteBook);
+                  showMenuSelection(value, noteBook.id, noteBook);
                 },
-                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                itemBuilder: (BuildContext context) =>
+                <PopupMenuEntry<String>>[
                   const PopupMenuItem<String>(
                       value: 'Edit',
                       child: ListTile(

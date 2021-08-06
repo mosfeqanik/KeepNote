@@ -4,9 +4,7 @@ import 'package:keepnote/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override

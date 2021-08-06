@@ -3,6 +3,7 @@ import 'package:keepnote/screens/commons/custombutton.dart';
 import 'package:keepnote/screens/commons/input_field.dart';
 import 'package:keepnote/screens/home/home_page.dart';
 import 'package:keepnote/utils/custom_toast.dart';
+import 'package:keepnote/utils/share_pref.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,6 +16,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    setPref();
+  }
+
+  void setPref() async {
+    await Prefs.loadPref();
   }
 
   @override
@@ -78,10 +84,12 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomButton(
               onpress: () async {
                 if (password != null && email != null) {
-                  if (email == 'test@mail.com' && password == '1234')
+                  if (email == 'test@mail.com' && password == '1234') {
+                    Prefs.setBool(Prefs.IS_LOGGED_IN, true);
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => HomePage()),
-                        (route) => false);
+                            (route) => false);
+                  }
                 } else {
                   CustomToast.toast('Credential Error');
                 }

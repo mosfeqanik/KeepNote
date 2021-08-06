@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keepnote/NoteBook_Provider/Home_Page_Provider.dart';
-import 'package:keepnote/screens/home/home_page.dart';
+import 'package:keepnote/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomePage()
+        home: SplashPage()
       ),
     );
   }

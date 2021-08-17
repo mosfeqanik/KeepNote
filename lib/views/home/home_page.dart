@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:keepnote/NoteBook_Provider/Home_Page_Provider.dart';
-import 'package:keepnote/constants/constants.dart';
+import 'package:keepnote/models/NoteBook_Provider/Home_Page_Provider.dart';
+import 'package:keepnote/views/constants/constants.dart';
 import 'package:keepnote/database/database_helper.dart';
 import 'package:keepnote/models/note.dart';
-import 'package:keepnote/screens/drawer/drawer_page.dart';
-import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
-import 'package:keepnote/screens/login/login_screen.dart';
-import 'package:keepnote/screens/note/note_add_page.dart';
-import 'package:keepnote/screens/note/note_update_page.dart';
-import 'package:keepnote/utils/custom_toast.dart';
-import 'package:keepnote/utils/share_pref.dart';
+import 'package:keepnote/views/drawer/drawer_page.dart';
+import 'package:keepnote/views/commons/widgets/app_bar_title_widget.dart';
+import 'package:keepnote/views/login/login_screen.dart';
+import 'package:keepnote/views/note/note_add_page.dart';
+import 'package:keepnote/views/note/note_update_page.dart';
+import 'package:keepnote/views/commons/utils/custom_toast.dart';
+import 'package:keepnote/views/commons/utils/share_pref.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:keepnote/constants/constants.dart';
+import 'package:keepnote/views/constants/constants.dart';
 import 'package:keepnote/database/database_helper.dart';
 import 'package:keepnote/models/note.dart';
-import 'package:keepnote/screens/home/widgets/app_bar_title_widget.dart';
-import 'package:keepnote/utils/custom_toast.dart';
-import 'package:keepnote/utils/date_formatter.dart';
+import 'package:keepnote/views/commons/widgets/app_bar_title_widget.dart';
+import 'package:keepnote/views/commons/utils/custom_toast.dart';
+import 'package:keepnote/views/commons/utils/date_formatter.dart';
 
 
 class NoteUpdatePage extends StatefulWidget {

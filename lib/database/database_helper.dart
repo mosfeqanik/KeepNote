@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:keepnote/models/user.dart';
 import 'package:keepnote/models/note.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,12 +9,14 @@ class DatabaseHelper {
   Future<Database> initDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
     final path = join(directory.path, 'notebook.db');
-
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(
           "CREATE TABLE note(id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT,content TEXT, date TEXT)"
           "");
+      await db.execute(
+          "CREATE TABLE userTable(id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, password TEXT)"
+              "");
     });
   }
 
@@ -22,6 +25,14 @@ class DatabaseHelper {
     return db.insert('note', noteBook.toMap(),
         conflictAlgorithm: ConflictAlgorithm.ignore);
   }
+
+  Future<int> addUser(UserModel user) async {
+    final db = await initDatabase();
+    return db.insert('userTable', user.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+
 
   Future<List<NoteBook>> fetchNoteList() async {
     final db = await initDatabase();

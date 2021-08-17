@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:keepnote/screens/commons/custombutton.dart';
-import 'package:keepnote/screens/commons/input_field.dart';
-import 'package:keepnote/screens/home/home_page.dart';
-import 'package:keepnote/utils/custom_toast.dart';
-import 'package:keepnote/utils/share_pref.dart';
+import 'package:keepnote/views/commons/custombutton.dart';
+import 'package:keepnote/views/commons/input_field.dart';
+import 'package:keepnote/views/home/home_page.dart';
+import 'package:keepnote/views/commons/utils/custom_toast.dart';
+import 'package:keepnote/views/commons/utils/share_pref.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

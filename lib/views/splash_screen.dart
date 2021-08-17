@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:keepnote/utils/share_pref.dart';
-
+import 'package:keepnote/views/commons/utils/share_pref.dart';
 import 'home/home_page.dart';
 import 'login/login_screen.dart';
 

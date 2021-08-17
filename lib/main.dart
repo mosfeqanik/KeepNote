@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:keepnote/NoteBook_Provider/Home_Page_Provider.dart';
-import 'package:keepnote/screens/splash_screen.dart';
+import 'package:keepnote/models/NoteBook_Provider/Home_Page_Provider.dart';
+import 'package:keepnote/views/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 

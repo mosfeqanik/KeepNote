@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:keepnote/constants/constants.dart';
+import 'package:keepnote/views/constants/constants.dart';
 import 'package:keepnote/database/database_helper.dart';
-import 'package:keepnote/screens/home/home_page.dart';
-import 'package:keepnote/utils/custom_toast.dart';
+import 'package:keepnote/views/home/home_page.dart';
+import 'package:keepnote/views/commons/utils/custom_toast.dart';
 
 class DrawerPage extends StatefulWidget {
   @override

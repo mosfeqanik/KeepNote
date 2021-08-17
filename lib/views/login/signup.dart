@@ -39,11 +39,12 @@ class HomePage extends StatelessWidget {
                     height: 10,
                   ),
                   FadeAnimation(
-                      1.3,
-                      Text(
-                        "Welcome",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      )),
+                    1.3,
+                    Text(
+                      "Welcome \nput your information",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -64,7 +65,7 @@ class HomePage extends StatelessWidget {
                           height: 60,
                         ),
                         FadeAnimation(
-                            1.4,
+                            1.6,
                             Container(
                               decoration: BoxDecoration(
                                   color: Colors.white,

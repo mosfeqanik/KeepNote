@@ -31,6 +31,19 @@ class DatabaseHelper {
     return db.insert('userTable', user.toMap(),
         conflictAlgorithm: ConflictAlgorithm.ignore);
   }
+  Future<List<UserModel>> fetchUserList() async {
+    final db = await initDatabase();
+
+    final maps = await db.query('user');
+
+    return List.generate(maps.length, (index) {
+      return UserModel(
+        id: maps[index]['id'],
+        email: maps[index]['email'],
+        password: maps[index]['password']
+      );
+    });
+  }
 
 
 

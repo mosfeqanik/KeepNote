@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keepnote/models/NoteBook_Provider/Home_Page_Provider.dart';
+import 'package:keepnote/models/user.dart';
 import 'package:keepnote/views/constants/constants.dart';
 import 'package:keepnote/database/database_helper.dart';
 import 'package:keepnote/models/note.dart';
@@ -207,7 +208,6 @@ class _HomePageState extends State<HomePage> {
                   return NoteAddPage();
                 }),
               );
-
               if (isAdded == true) {
                 setState(() {
                   noteList = [];
@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                               width: 10,
                             ),
                             Text(
-                              'Hello, ' + name,
+                              'Hello, ' +name,
                               style: Theme
                                   .of(context)
                                   .textTheme

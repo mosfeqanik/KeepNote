@@ -37,7 +37,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
                         child: Text(
-                          'Notebook',
+                          'Keep Note',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

@@ -60,7 +60,7 @@ class _SplashPageState extends State<SplashPage> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Notebook',
+                              text: 'Keep',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 32,
@@ -68,7 +68,7 @@ class _SplashPageState extends State<SplashPage> {
                               ),
                             ),
                             TextSpan(
-                              text: '365',
+                              text: 'note',
                               style: TextStyle(
                                 color: Colors.grey[400],
                                 fontSize: 32,
